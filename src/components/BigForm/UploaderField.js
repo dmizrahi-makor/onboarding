@@ -1,13 +1,15 @@
 import { FormControlLabel, makeStyles } from "@material-ui/core";
 import { Box, Input, Typography } from "@material-ui/core";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import fileDataSlice from "../store/fileDataSlice";
 import { withStyles } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import InfoIcon from "@material-ui/icons/Info";
+import FileContext from "../../context/files";
+import AuthContext from "../../context/auth";
 
 const useStyles = makeStyles({
   uploaderAttach: {
@@ -15,19 +17,22 @@ const useStyles = makeStyles({
   },
 });
 const UploaderField = (props) => {
-  const state = useSelector((state) => state.fileData);
-  const dispatch = useDispatch();
-  const [isUploaded, setUploaded] = useState(false);
-  const [fileName, setFileName] = useState("");
+  // const state = useSelector((state) => state.fileData);
+  // const dispatch = useDispatch();
+  // const [isUploaded, setUploaded] = useState(false);
+  // const [fileName, setFileName] = useState("");
   const classes = useStyles();
+  const { fileState, setFileState } = useContext(FileContext);
+  const { authState, setAuthState } = useContext(AuthContext);
+  const { uuid } = authState;
 
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
       const formData = new FormData();
       formData.append("file", target.files[0]);
       const fileType = target.files[0].type;
-      console.log(target.files[0]);
-      console.log(fileType);
+      // console.log(target.files[0]);
+      // console.log(fileType);
       if (
         fileType.includes("image") ||
         fileType.includes("text") ||
@@ -35,20 +40,23 @@ const UploaderField = (props) => {
       ) {
         console.log(target.id);
         await axios
-          .put(
-            `http://10.0.0.197:3030/api/file/289334a4-50f3-11ec-be49-d08e7912923c/${target.id}`,
+          .post(
+            `http://10.0.0.197:3030/api/file/6ba26ce7-536b-11ec-be49-d08e7912923c/${target.id}`,
             formData
           )
           .then((res) => {
-            console.log(res);
-            dispatch(
-              fileDataSlice.actions.putFile({
-                id: props.id,
-                value: target.files[0],
-              })
-            );
-            setUploaded(true);
-            setFileName(target.files[0].name);
+            if (res.status === 200) {
+              console.log("200 in files", res.data.progress);
+              setAuthState((prev) => ({
+                ...authState,
+                progress: res.data.progress,
+              }));
+
+              setFileState({
+                ...fileState,
+                [target.id]: target.files[0].name,
+              });
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -64,6 +72,12 @@ const UploaderField = (props) => {
         {props.label}
       </Typography>
       {props.info && <InfoIcon />}
+      {fileState[props.id] && (
+        <Typography>
+          <CheckIcon />
+          {fileState[props.id]}
+        </Typography>
+      )}
       <FormControlLabel
         className={classes.uploaderAttach}
         sx={{ color: "white" }}
@@ -76,7 +90,7 @@ const UploaderField = (props) => {
             }}
             onChange={handleChange}
           >
-            {isUploaded && <span>v</span>}
+            {fileState[props.id] && <span>v</span>}
             {props.label}
           </StyledInput>
         }
@@ -87,12 +101,6 @@ const UploaderField = (props) => {
           </Box>
         }
       />
-      {isUploaded && (
-        <Typography>
-          <CheckIcon />
-          {fileName}
-        </Typography>
-      )}
     </Box>
   );
 };

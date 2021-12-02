@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import UploaderField from "./UploaderField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import DeleteIcon from "@material-ui/icons/Delete";
+
 import axios from "axios";
 // import { useStyles } from "../../styles";
 
@@ -14,11 +15,12 @@ const useStyles = makeStyles({
     cursor: "pointer",
   },
 });
+
 function DynamicInputGroup() {
-  const state = useSelector((state) => state.formData);
+  // const state = useSelector((state) => state.formData);
   const [inputIDs, setInputIDs] = useState([`extra-file-1`]);
   const handleAdd = () => {
-    setInputIDs((prev) => [`extra-file-${prev.length}`, ...prev]);
+    setInputIDs((prev) => [`PROOF-IDENTITY-ADDRESS-${prev.length}`, ...prev]);
   };
   const classes = useStyles();
 
@@ -39,6 +41,7 @@ function DynamicInputGroup() {
   return (
     <Box>
       {inputIDs.map((id) => {
+        /////////////////////make sure setFileState is called
         return (
           <Box>
             <UploaderField id={id} label={"Proof of Identity/Address"} />

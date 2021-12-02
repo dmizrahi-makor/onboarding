@@ -19,6 +19,8 @@ import FieldContext, {
   initialState as initialFieldState,
 } from "./context/fields";
 import AuthContext, { initialState as initialAuthState } from "./context/auth";
+import ChiefProvider from "./components/ChiefProvider";
+import FinaleBox from "./components/FinaleBox";
 
 const useStyles = makeStyles({
   container: {
@@ -26,17 +28,15 @@ const useStyles = makeStyles({
     backgroundColor: "white",
   },
 });
+
 const App = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.fieldData);
+  // const dispatch = useDispatch();
+  // const state = useSelector((state) => state.fieldData);
   const classes = useStyles();
   // const [isLoggedIn, setLoggedIn] = useState(false);
-  const [fileState, setFileState] = useState(initialFileState);
-  const [fieldState, setFieldState] = useState(initialFieldState);
-  const [authState, setAuthState] = useState(initialAuthState);
-  useEffect(() => {
-    console.log("app launched");
-  }, []);
+  // useEffect(() => {
+  //   console.log("app launched");
+  // }, []);
 
   // useEffect(()=>{
   //   axios.all([axios.get('http://10.0.0.197:3030/api/onboarding/289334a4-50f3-11ec-be49-d08e7912923c'),
@@ -51,23 +51,20 @@ const App = () => {
   //      dispatch(formDataActions.uploadFields(fullData));
   // }))})
   return (
-    <FileContext.Provider value={{ fileState, setFileState }}>
-      <FieldContext.Provider value={{ fieldState, setFieldState }}>
-        <AuthContext.Provider value={{ authState, setAuthState }}>
-          <Container md={6} className={classes.container}>
-            {/* {!false ? <SimpleForm /> : <StepperFormComplex />} */}
+    <ChiefProvider>
+      <Container md={6} className={classes.container}>
+        {/* {!false ? <SimpleForm /> : <StepperFormComplex />} */}
 
-            <Router>
-              <Routes>
-                {/* <Route exact path="/" element={<SimpleForm />}></Route> */}
-                <Route path="/" element={<StepperFormComplex />}></Route>
-                <Route path="/:uuid" element={<StepperFormComplex />}></Route>
-              </Routes>
-            </Router>
-          </Container>
-        </AuthContext.Provider>
-      </FieldContext.Provider>
-    </FileContext.Provider>
+        <Router>
+          <Routes>
+            {/* <Route exact path="/" element={<SimpleForm />}></Route> */}
+            <Route exact path="/" element={<SimpleForm />}></Route>
+            <Route path="/:uuid" element={<StepperFormComplex />}></Route>
+            <Route path="/finale" element={<FinaleBox />}></Route>
+          </Routes>
+        </Router>
+      </Container>
+    </ChiefProvider>
   );
 };
 

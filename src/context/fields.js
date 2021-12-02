@@ -8,7 +8,7 @@ export const initialState = {
   url: "",
   description: "",
   directors: "",
-  regNumber: "",
+  regnumber: "",
   country: "",
   holders: "",
 };

@@ -1,9 +1,9 @@
 export const formData = {
   form1: {
     grid1: [
-      { id: "cname", label: "COMPANY NAME" },
-      { id: "regNumber", label: "REGISTERED NUMBER" },
-      { id: "oaddress", label: "REGISTERED OFFICE ADDRESS" },
+      { id: "cname", label: "COPMANY nAME" },
+      { id: "regnumber", label: "Register Number" },
+      { id: "oaddress", label: "Registered Office Address" },
       // {id: 'country', label: 'COUNTRY'},
     ],
     grid2: [
@@ -20,27 +20,27 @@ export const formData = {
     ],
   },
   form2: [
-    { id: "f_certificate", label: "CERTIFICATE OF INCORPORATION" },
+    { id: "CERTIFICATE", label: "CERTIFICATE OF INCORPORATION" },
     {
-      id: "f_articles",
+      id: "ARTICLES",
       label: "ARTICLES OF ASSOCIATION/MEMORANDUM OF ASSOCIATION",
     },
-    { id: "f_proof", label: "DIRECTOR'S NAME" },
+    { id: "PROOF", label: "DIRECTOR'S NAME" },
     {
-      id: "f_directos",
+      id: "DIRECTORS",
       label: "PROOF OF REGISTERED OR PRINCIPAL BUSINESS ADDRESS",
     },
-    { id: "f_shareholders", label: "COMPANY DIRECTORS' LIST DATED AND SIGNED" },
-    { id: "f_source", label: "COMPANY SHAREHOLDERS' LIST DATED AND SIGNED" },
+    { id: "SHAREHOLDERS", label: "COMPANY DIRECTORS' LIST DATED AND SIGNED" },
+    { id: "FUNDS", label: "SOURCE OF FUNDS/WEALTH" },
     {
-      id: "f_ownership",
+      id: "OWNERSHIP",
       label: "OWNERSHIP STRUCTURE SCHEME/ORGANIZATIONAL CHART OR EQUIVALENT",
     },
-    { id: "f_compliance", label: "COMPLIANCE KYC AML POLICY" },
-    { id: "f_statment", label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)" },
-    { id: "f_proofs", label: "DIRECTOR'S NAME" },
+    { id: "COMPLIANCE", label: "COMPLIANCE KYC AML POLICY" },
+    { id: "STATEMENT", label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)" },
+    { id: "PROOFS", label: "DIRECTOR'S NAME" },
   ],
-  form3: {},
+  // form3: {},
 };
 
 // const numOfFields =

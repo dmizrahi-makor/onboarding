@@ -6,19 +6,26 @@ import { styled } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import { Modal, Typography } from "@material-ui/core";
+import { Modal, Typography, makeStyles } from "@material-ui/core";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
+
+const useStyles = makeStyles({
+  simpleForm: {
+    boxShadow: "0 0 1rem rgba(0,0,0,.3)",
+    textAlign: "center",
+  },
+});
 
 const SimpleForm = () => {
   const [name, setName] = useState();
@@ -26,7 +33,7 @@ const SimpleForm = () => {
   const [phone, setPhone] = useState();
   const [company, setCompany] = useState();
   const [isLogged, setLogged] = useState(false);
-
+  const classes = useStyles();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -70,18 +77,18 @@ const SimpleForm = () => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit}>
+      <Box onSubmit={handleSubmit} className={classes.simpleForm}>
         <Grid
           container
           justifyContent="center"
           sx={{ display: "flex", flexGrow: "1", marginTop: "100px" }}
+          spacing={24}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         >
-          <Grid
-            direction="column"
-            alignItems="flex-start"
-            sx={{ display: "flex", marginRight: "20px", color: "white" }}
-          >
+          <Grid item md={6}>
             <TextField
+              variant="outlined"
               required
               onChange={handleChange}
               id="client_name"
@@ -93,7 +100,10 @@ const SimpleForm = () => {
               }}
               inputProps={{ style: { color: "white" } }}
             />
+          </Grid>
+          <Grid item md={6}>
             <TextField
+              variant="outlined"
               required
               onChange={handleChange}
               id="client_email"
@@ -106,8 +116,10 @@ const SimpleForm = () => {
               inputProps={{ style: { color: "white" } }}
             />
           </Grid>
-          <Grid style={{ display: "flex", flexDirection: "column" }}>
+
+          <Grid item md={6}>
             <TextField
+              variant="outlined"
               required
               onChange={handleChange}
               id="client_phone"
@@ -121,7 +133,10 @@ const SimpleForm = () => {
               }}
               inputProps={{ style: { color: "white" } }}
             />
+          </Grid>
+          <Grid item md={6}>
             <TextField
+              variant="outlined"
               required
               onChange={handleChange}
               id="client_company"
@@ -135,22 +150,22 @@ const SimpleForm = () => {
               }}
               inputProps={{ style: { color: "white" } }}
             />
-            <Button
-              sx={{
-                color: "#f1783f",
-                width: "100px",
-                border: "solid 3px #f1783f",
-                margin: "2px",
-                display: "block",
-                margintop: "24px",
-                marginLeft: "auto",
-              }}
-              type="submit"
-            >
-              Send
-            </Button>
           </Grid>
         </Grid>
+        <Button
+          sx={{
+            color: "#f1783f",
+            width: "100px",
+            border: "solid 3px #f1783f",
+            margin: "2px",
+            display: "block",
+            margintop: "24px",
+            marginLeft: "auto",
+          }}
+          onClick={handleSubmit}
+        >
+          Send
+        </Button>
       </Box>
 
       <Modal open={isLogged}>

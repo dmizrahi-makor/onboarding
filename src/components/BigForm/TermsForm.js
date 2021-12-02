@@ -1,16 +1,28 @@
 import { Box, Checkbox, FormControlLabel } from "@material-ui/core";
 import { Grid, Typography } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import AuthContext from "../../context/auth";
 import CheckBoxOutlineBlankSharpIcon from "@material-ui/icons/CheckBoxOutlineBlankSharp";
 
 const TermsForm = () => {
+  const { authState, setAuthState } = useContext(AuthContext);
   const handleApprove = () => {
     setApproved(true);
   };
   const handleReject = () => {
     setApproved(false);
   };
+
+  const toggleAgree = (e) => {
+    const isAccepted = e.target.checked;
+    console.log("accepting ", isAccepted);
+    setAuthState((prev) => ({ isAccepted }));
+  };
+
+  useEffect(() => {
+    console.log("authState", authState);
+  }, [authState]);
   const [isApproved, setApproved] = useState(false);
   return (
     <Box>
@@ -39,7 +51,12 @@ const TermsForm = () => {
       </Grid>
       <FormControlLabel
         sx={{ color: "white" }}
-        control={<Checkbox icon={<CheckBoxOutlineBlankSharpIcon />} />}
+        control={
+          <Checkbox
+            onChange={toggleAgree}
+            icon={<CheckBoxOutlineBlankSharpIcon />}
+          />
+        }
         label={
           <Typography>
             Before you can submit application, you must aggree with Terms of Use
